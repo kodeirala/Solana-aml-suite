@@ -36,8 +36,8 @@ export default function NetworkGraph({ address, connections, onNodeClick }: Netw
   const [tooltip, setTooltip] = useState<{ x: number; y: number; node: Node } | null>(null);
   const [selectedNode, setSelectedNode] = useState<string | null>(address);
 
-  useEffect((): void => {
-    if (!svgRef.current || !containerRef.current || connections.length === 0) return;
+  useEffect(() => {
+    if (!svgRef.current || !containerRef.current || connections.length === 0) return undefined;
 
     const container = containerRef.current;
     const width = container.clientWidth;
