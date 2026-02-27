@@ -15,9 +15,10 @@ interface Link extends d3.SimulationLinkDatum<Node> {
 interface NetworkGraphProps {
   connections: Link[];
   address: string;
+  onNodeClick?: (address: string) => void; // <-- NEW PROP
 }
 
-export default function NetworkGraph({ connections, address }: NetworkGraphProps) {
+export default function NetworkGraph({ connections, address, onNodeClick }: NetworkGraphProps) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [selectedNode, setSelectedNode] = useState<string | null>(address);
@@ -81,7 +82,12 @@ export default function NetworkGraph({ connections, address }: NetworkGraphProps
             d.fy = null;
           })
       )
-      .on("click", (_, d) => setSelectedNode(d.id));
+      .on("click", (_, d) => {
+        setSelectedNode(d.id);
+        if (onNodeClick) {
+          onNodeClick(d.id); // <-- notify parent
+        }
+      });
 
     // Update positions
     simulation.on("tick", () => {
@@ -98,7 +104,7 @@ export default function NetworkGraph({ connections, address }: NetworkGraphProps
     return () => {
       simulation.stop();
     };
-  }, [connections, address, selectedNode]);
+  }, [connections, address, selectedNode, onNodeClick]);
 
   return (
     <div ref={containerRef} style={{ width: "100%", height: "500px" }}>
