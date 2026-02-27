@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solana AML Suite - System Architecture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 1400px;
+            width: 100%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #1a202c;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        
+        .architecture {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .layer {
+            display: flex;
+            gap: 20px;
+            align-items: stretch;
+        }
+        
+        .box {
+            flex: 1;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .box h3 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .box li {
+            padding: 8px 0;
+            color: rgba(255,255,255,0.9);
+            font-size: 0.95em;
+        }
+        
+        .box li:before {
+            content: "→";
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .frontend {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .backend {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .indexer {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        
+        .risk-engine {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+        }
+        
+        .smart-contract {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+        }
+        
+        .arrow {
+            text-align: center;
+            font-size: 2em;
+            color: #667eea;
+            margin: -10px 0;
+        }
+        
+        .icon {
+            font-size: 1.5em;
+        }
+        
+        .tech-stack {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+        }
+        
+        .tech-stack h2 {
+            color: #1a202c;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .tech-item {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .tech-item strong {
+            display: block;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .tech-item span {
+            color: #718096;
+            font-size: 0.9em;
+        }
+        
+        .flow-description {
+            background: #edf2f7;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .flow-description h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+        
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .flow-step {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-weight: 500;
+            color: #2d3748;
+        }
+        
+        .flow-arrow {
+            color: #667eea;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ Solana AML Compliance Suite</h1>
+        <p class="subtitle">Real-time Anti-Money Laundering System Architecture</p>
+        
+        <div class="flow-description">
+            <h3>System Flow</h3>
+            <div class="flow-steps">
+                <div class="flow-step">1. Transaction Occurs</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">2. Indexer Captures</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">3. Risk Analysis</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">4. Pattern Detection</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">5. Alert/Block</div>
+            </div>
+        </div>
+        
+        <div class="architecture">
+            <!-- Layer 1: Frontend -->
+            <div class="layer">
+                <div class="box frontend">
+                    <h3><span class="icon">🎨</span> Frontend Dashboard</h3>
+                    <ul>
+                        <li>Next.js 14 with TypeScript</li>
+                        <li>Real-time transaction monitoring</li>
+                        <li>Wallet risk score lookup</li>
+                        <li>Interactive charts (Recharts)</li>
+                        <li>WebSocket for live updates</li>
+                        <li>Blacklist management UI</li>
+                        <li>Compliance reports export</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Layer 2: Backend -->
+            <div class="layer">
+                <div class="box backend">
+                    <h3><span class="icon">⚡</span> Backend API</h3>
+                    <ul>
+                        <li>Express.js REST API</li>
+                        <li>WebSocket server for alerts</li>
+                        <li>PostgreSQL for data storage</li>
+                        <li>Redis for caching</li>
+                        <li>Bull queues for jobs</li>
+                        <li>API authentication</li>
+                        <li>Rate limiting</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Layer 3: Core Components -->
+            <div class="layer">
+                <div class="box indexer">
+                    <h3><span class="icon">📊</span> Transaction Indexer</h3>
+                    <ul>
+                        <li>Solana Web3.js connection</li>
+                        <li>Real-time block monitoring</li>
+                        <li>Transaction parsing</li>
+                        <li>Batch processing</li>
+                        <li>Historical data sync</li>
+                        <li>Helius webhooks</li>
+                    </ul>
+                </div>
+                
+                <div class="box risk-engine">
+                    <h3><span class="icon">🔍</span> Risk Analysis Engine</h3>
+                    <ul>
+                        <li>Transaction velocity scoring</li>
+                        <li>Amount pattern analysis</li>
+                        <li>Wallet age calculation</li>
+                        <li>Graph relationship analysis</li>
+                        <li>Structuring detection</li>
+                        <li>Rapid movement tracking</li>
+                        <li>Round number flagging</li>
+                    </ul>
+                </div>
+                
+                <div class="box smart-contract">
+                    <h3><span class="icon">🔒</span> Smart Contract</h3>
+                    <ul>
+                        <li>Anchor framework (Rust)</li>
+                        <li>Token with Transfer Hook</li>
+                        <li>On-chain blacklist registry</li>
+                        <li>Automatic blocking</li>
+                        <li>Immutable audit log</li>
+                        <li>Authority management</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tech-stack">
+            <h2>🔧 Technology Stack</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <strong>Frontend</strong>
+                    <span>Next.js, React, TypeScript, TailwindCSS</span>
+                </div>
+                <div class="tech-item">
+                    <strong>Backend</strong>
+                    <span>Node.js, Express, PostgreSQL, Redis</span>
+                </div>
+                <div class="tech-item">
+                    <strong>Blockchain</strong>
+                    <span>Solana, Anchor, Token Extensions</span>
+                </div>
+                <div class="tech-item">
+                    <strong>Data Viz</strong>
+                    <span>Recharts, D3.js</span>
+                </div>
+                <div class="tech-item">
+                    <strong>Real-time</strong>
+                    <span>WebSocket, Bull Queue</span>
+                </div>
+                <div class="tech-item">
+                    <strong>Infrastructure</strong>
+                    <span>Helius RPC, Vercel, Railway</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="flow-description" style="margin-top: 30px;">
+            <h3>🎯 Key Features</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px;">
+                <div style="background: white; padding: 15px; border-radius: 8px;">
+                    <strong style="color: #667eea; display: block; margin-bottom: 8px;">Real-time Monitoring</strong>
+                    <span style="color: #4a5568;">Instant detection of suspicious transactions</span>
+                </div>
+                <div style="background: white; padding: 15px; border-radius: 8px;">
+                    <strong style="color: #667eea; display: block; margin-bottom: 8px;">Risk Scoring 0-100</strong>
+                    <span style="color: #4a5568;">AI-powered wallet risk assessment</span>
+                </div>
+                <div style="background: white; padding: 15px; border-radius: 8px;">
+                    <strong style="color: #667eea; display: block; margin-bottom: 8px;">Pattern Detection</strong>
+                    <span style="color: #4a5568;">Structuring, rapid movement, mixer usage</span>
+                </div>
+                <div style="background: white; padding: 15px; border-radius: 8px;">
+                    <strong style="color: #667eea; display: block; margin-bottom: 8px;">On-chain Enforcement</strong>
+                    <span style="color: #4a5568;">Automatic blocking via Transfer Hook</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
