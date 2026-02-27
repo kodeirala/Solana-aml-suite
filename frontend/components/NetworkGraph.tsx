@@ -294,7 +294,7 @@ export default function NetworkGraph({ address, connections, onNodeClick }: Netw
 
     svg.call(zoom);
 
-    return () => simulation.stop();
+    return () => { simulation.stop(); };
   }, [address, connections]);
 
   const nodeColor = (risk: number) => {
