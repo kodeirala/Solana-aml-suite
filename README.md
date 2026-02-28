@@ -2,34 +2,47 @@
 
 > Real-time Anti-Money Laundering monitoring and compliance platform for Solana blockchain
 
-![Solana](https://img.shields.io/badge/Solana-Devnet-9945FF?logo=solana)
+![Solana](https://img.shields.io/badge/Solana-Mainnet-9945FF?logo=solana)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Built](https://img.shields.io/badge/built%20in-4%20days-red)
+![Next.js](https://img.shields.io/badge/Next.js-14-black)
+![Railway](https://img.shields.io/badge/backend-Railway-purple)
+![Vercel](https://img.shields.io/badge/frontend-Vercel-black)
 
-## 📹 Demo Video
+## 🔗 Live Links
 
-[Watch 3-minute demo on YouTube](YOUR_YOUTUBE_LINK_HERE)
+| | Link |
+|---|---|
+| 🌐 **Live Demo** | [solana-aml-suite-j275rj0be-kodeiralas-projects.vercel.app](https://solana-aml-suite-j275rj0be-kodeiralas-projects.vercel.app) |
+| 🔧 **Backend API** | [solana-aml-suite-production.up.railway.app](https://solana-aml-suite-production.up.railway.app/api/health) |
+| 📦 **GitHub** | [github.com/kodeirala/Solana-aml-suite](https://github.com/kodeirala/Solana-aml-suite) |
+| 📹 **Demo Video** | Coming Soon |
+
+**Test credentials:** Email: `demo@aml.com` / Password: `Demo1234!`
+
+---
 
 ## 🎯 Problem Statement
 
-Cryptocurrency exchanges and DeFi protocols face a $200B+ compliance challenge:
+Cryptocurrency exchanges and DeFi protocols face a **$200B+ compliance challenge**:
 
-- **Regulatory Pressure**: Exchanges like Binance have paid billions in AML violation fines
-- **Lack of Tools**: Solana ecosystem has minimal AML monitoring infrastructure
+- **Regulatory Pressure**: Binance paid $4.3B in AML violation fines in 2023
+- **Lack of Tools**: Solana ecosystem has minimal AML monitoring infrastructure  
 - **Manual Processes**: Current compliance is reactive, not proactive
 - **Risk Exposure**: Protocols unknowingly facilitate money laundering
 
 **The Result**: Projects get shut down, users lose access, entire ecosystems suffer reputational damage.
 
-## 💡 Our Solution
+## 💡 Solution
 
 A **real-time AML compliance platform** specifically built for Solana that:
 
-✅ **Monitors** all transactions in real-time using on-chain data  
-✅ **Analyzes** wallet behavior with ML-powered risk scoring (0-100)  
+✅ **Monitors** all transactions in real-time using Helius RPC  
+✅ **Analyzes** wallet behavior with risk scoring (0-100)  
 ✅ **Detects** suspicious patterns (structuring, rapid movement, mixer usage)  
-✅ **Blocks** high-risk transfers automatically via Token Extensions  
+✅ **Blocks** high-risk transfers automatically via Token Extensions Transfer Hook  
 ✅ **Reports** compliance data for regulators in auditable format  
+✅ **Visualizes** wallet relationship networks with D3.js force graph  
 
 ### How It Works
 
@@ -37,98 +50,100 @@ A **real-time AML compliance platform** specifically built for Solana that:
 User Transfer → Transfer Hook → Risk Check → Allow/Block → Alert Dashboard
 ```
 
-1. **Transaction Indexer** pulls all Solana transactions via RPC
-2. **Risk Engine** analyzes patterns and assigns risk scores
-3. **Smart Contract** enforces blacklist via Transfer Hook
+1. **Transaction Indexer** pulls Solana mainnet transactions via Helius RPC
+2. **Risk Engine** analyzes patterns and assigns risk scores (0-100)
+3. **Smart Contract** enforces blacklist via Token Extensions Transfer Hook
 4. **Dashboard** provides real-time monitoring for compliance teams
 
 ## 🏗️ Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                   FRONTEND DASHBOARD                        │
-│        (Next.js - Real-time monitoring interface)           │
+│              FRONTEND (Vercel - Next.js 14)                 │
+│     Batman Dark Theme · Real-time WebSocket Updates         │
+│     Dashboard · Network Graph · Alerts · Blacklist          │
 └─────────────────┬───────────────────────────────────────────┘
-                  │
+                  │ HTTPS + WSS
 ┌─────────────────▼───────────────────────────────────────────┐
-│                   BACKEND API                               │
-│  • REST API for wallet lookups                              │
-│  • WebSocket for real-time alerts                           │
-│  • Pattern detection algorithms                             │
+│              BACKEND API (Railway - Node.js)                │
+│  REST API · WebSocket · Auth (JWT) · Pattern Detection      │
 └─────────┬───────────────┬───────────────┬───────────────────┘
           │               │               │
 ┌─────────▼─────┐ ┌──────▼──────┐ ┌──────▼──────────────────┐
-│  TRANSACTION  │ │  RISK ENGINE │ │   SMART CONTRACT       │
-│   INDEXER     │ │              │ │   (Token Extension)    │
-│               │ │  • Velocity  │ │                        │
-│  PostgreSQL   │ │  • Patterns  │ │  • Transfer Hook       │
-│  Redis Cache  │ │  • ML Model  │ │  • Blacklist Registry  │
-│  Bull Queue   │ │  • Scoring   │ │  • Auto-block          │
-└───────────────┘ └──────────────┘ └────────────────────────┘
+│  TRANSACTION  │ │  RISK ENGINE │ │   SMART CONTRACT        │
+│   INDEXER     │ │              │ │   (Token Extension)     │
+│               │ │  • Velocity  │ │                         │
+│  PostgreSQL   │ │  • Patterns  │ │  • Transfer Hook        │
+│  (Railway)    │ │  • Scoring   │ │  • Blacklist Registry   │
+└───────────────┘ └──────────────┘ └─────────────────────────┘
+                          │
+              ┌───────────▼──────────┐
+              │   Solana Mainnet     │
+              │   Helius RPC         │
+              └──────────────────────┘
 ```
 
 ## ✨ Key Features
 
-### 🔍 Transaction Monitoring
-- Real-time indexing of all Solana transactions
+### 🔍 Real-Time Transaction Monitoring
+- Live indexing of Solana mainnet transactions via Helius RPC
 - WebSocket push notifications for suspicious activity
-- Historical transaction analysis
-- Transaction graph visualization
+- Historical transaction analysis with 24h activity charts
+- Color-coded risk levels (green/yellow/red)
 
 ### 📊 Risk Scoring (0-100)
 Our algorithm considers:
 - **Transaction Velocity**: High frequency = suspicious
-- **Amount Patterns**: Large or suspicious round numbers
+- **Amount Patterns**: Large or suspicious round numbers  
 - **Wallet Age**: New wallets = higher risk
 - **Known Bad Actors**: OFAC/blacklist integration
-- **Behavioral Patterns**: ML-detected anomalies
+- **Behavioral Patterns**: Structuring, rapid movement, mixer usage
 
 ### 🚨 Pattern Detection
 Automatically flags:
 - **Structuring**: Multiple transactions just under reporting thresholds
 - **Rapid Movement**: Funds moving through 5+ wallets quickly
-- **Mixer Usage**: Tornado Cash-like patterns
-- **High Velocity**: Unusual transaction frequency
+- **Round Numbers**: Exact round amounts (10K, 50K, 100K SOL)
+- **High Velocity**: Unusual transaction frequency (10+ txns/hour)
 
-### 🔒 On-Chain Enforcement
-- Token with Transfer Hook Extension
+### 🕸️ Network Graph Visualization
+- D3.js force-directed graph showing wallet connections
+- Color-coded nodes by risk score
+- Transaction flow arrows with SOL volume labels
+- Interactive — zoom, pan, drag nodes, click to explore
+
+### 🔒 On-Chain Enforcement (Token Extensions)
+- SPL Token with Transfer Hook Extension
 - Automatic blocking of blacklisted addresses
-- Immutable audit trail
-- Decentralized compliance
+- Immutable audit trail on Solana
+- Decentralized compliance enforcement
 
 ### 📈 Compliance Dashboard
-- Real-time transaction feed
-- Wallet risk lookup
-- Blacklist management
-- Exportable reports for regulators
-- Multi-protocol support (SaaS model)
+- Real-time transaction feed with risk badges
+- Wallet network analysis
+- Blacklist management (manual + auto at 90+ risk)
+- Multi-severity alert system (critical/high/medium/low)
 
 ## 🚀 Tech Stack
 
 **Frontend**
-- Next.js 14 (React 18)
-- TypeScript
-- TailwindCSS
-- Recharts (data visualization)
-- Solana Wallet Adapter
+- Next.js 14 (React 18 + TypeScript)
+- TailwindCSS (Batman dark theme)
+- Recharts (bar/pie/line charts)
+- D3.js (network graph)
+- Orbitron + Rajdhani + Share Tech Mono fonts
 
 **Backend**
 - Node.js + Express
-- PostgreSQL (transaction storage)
-- Redis (caching)
-- Bull (job queues)
-- WebSocket (real-time)
+- PostgreSQL (Railway)
+- WebSocket (real-time alerts)
+- JWT authentication (PBKDF2 + HMAC-SHA256)
 
 **Blockchain**
 - Solana Web3.js
 - Anchor Framework
 - Token Extensions (Transfer Hook)
-- Helius RPC (enhanced data)
-
-**Analysis**
-- Custom pattern detection algorithms
-- PostgreSQL functions for risk scoring
-- Graph analysis for wallet relationships
+- Helius RPC (mainnet data)
 
 ## 📦 Installation
 
@@ -136,23 +151,18 @@ Automatically flags:
 - Node.js 18+
 - PostgreSQL 14+
 - Redis
-- Rust + Solana CLI (for smart contract)
-- Anchor 0.29+ (for smart contract)
 
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/your-team/solana-aml-suite.git
-cd solana-aml-suite
+git clone https://github.com/kodeirala/Solana-aml-suite.git
+cd Solana-aml-suite
 ```
 
 ### 2. Setup Database
 
 ```bash
-# Create database
 createdb solana_aml
-
-# Run schema
 psql -U postgres -d solana_aml -f db-schema.sql
 ```
 
@@ -161,16 +171,9 @@ psql -U postgres -d solana_aml -f db-schema.sql
 ```bash
 cd backend
 npm install
-
-# Create .env file
 cp .env.example .env
 # Edit .env with your configuration
-
-# Start Redis
-redis-server
-
-# Run backend
-npm run dev
+npm start
 ```
 
 ### 4. Setup Frontend
@@ -178,164 +181,85 @@ npm run dev
 ```bash
 cd frontend
 npm install
-
-# Create .env.local
 echo "NEXT_PUBLIC_API_URL=http://localhost:3001" > .env.local
-
-# Run frontend
 npm run dev
 ```
 
-### 5. Deploy Smart Contract
-
-```bash
-cd programs
-
-# Install Anchor
-cargo install --git https://github.com/coral-xyz/anchor avm --locked --force
-avm install latest
-avm use latest
-
-# Build
-anchor build
-
-# Deploy to Devnet
-anchor deploy --provider.cluster devnet
-
-# Copy program ID to backend .env
-```
-
-### 6. Start Transaction Indexer
+### 5. Start Indexer
 
 ```bash
 cd backend
 node src/indexer.js
 ```
 
-## 🎮 Usage
+### 6. Seed Demo Data
 
-### Access Dashboard
-```
-http://localhost:3000
-```
-
-### Search a Wallet
-1. Enter Solana address in search bar
-2. View risk score and transaction history
-3. See detected patterns
-4. Blacklist if necessary
-
-### Monitor Transactions
-- Real-time feed shows all indexed transactions
-- Flagged transactions highlighted in red
-- Click for details
-
-### Manage Blacklist
 ```bash
-# Via API
-curl -X POST http://localhost:3001/api/blacklist \
-  -H "Content-Type: application/json" \
-  -d '{
-    "address": "BadActor...",
-    "reason": "Known scammer",
-    "source": "manual"
-  }'
+cd backend
+node scripts/seed.js
 ```
 
-### Check Wallet Risk Score
-```bash
-curl http://localhost:3001/api/wallet/YOUR_ADDRESS/risk
-```
+Visit `http://localhost:3000` 🦇
 
-## 📊 API Endpoints
+## 📊 API Reference
 
-### GET `/api/wallet/:address/risk`
-Get risk score and analysis for a wallet
-
-### GET `/api/transactions`
-Get recent transactions (with filtering)
-
-### POST `/api/blacklist`
-Add address to blacklist
-
-### DELETE `/api/blacklist/:address`
-Remove from blacklist
-
-### GET `/api/stats`
-Get platform statistics
-
-### GET `/api/alerts`
-Get recent alerts
-
-See full API docs: [API.md](./API.md)
+| Endpoint | Method | Description |
+|---|---|---|
+| `/api/health` | GET | Health check |
+| `/api/auth/signup` | POST | Create account |
+| `/api/auth/login` | POST | Login |
+| `/api/wallet/:address/risk` | GET | Wallet risk score |
+| `/api/wallet/:address/network` | GET | Wallet connections |
+| `/api/transactions` | GET | Recent transactions |
+| `/api/blacklist` | GET/POST | Manage blacklist |
+| `/api/alerts` | GET | Get alerts |
+| `/api/stats` | GET | Platform statistics |
 
 ## 🎯 Business Model
 
 ### SaaS Pricing
-- **Starter**: $500/month - 10k transactions
-- **Professional**: $2,000/month - 100k transactions
-- **Enterprise**: $5,000+/month - Unlimited + custom features
+- **Starter**: $500/month — 10K transactions/mo
+- **Professional**: $2,000/month — 100K transactions/mo  
+- **Enterprise**: Custom — Unlimited + white-label
 
 ### Target Customers
-- DEXs (Decentralized Exchanges)
-- DeFi Protocols
+- DEXs and DeFi Protocols
 - NFT Marketplaces
 - Crypto Payment Processors
 - DAOs with treasuries
 
 ### Revenue Projection
-- 50 protocols × $2,000/month = **$100k MRR**
+- 50 protocols × $2,000/month = **$100K MRR**
 - Total Addressable Market: $200B+ compliance industry
 
 ## 🏆 Competitive Advantages
 
-vs. Chainalysis:
-- ✅ Built specifically for Solana (they focus on Bitcoin/Ethereum)
-- ✅ Real-time on-chain enforcement (they only monitor)
-- ✅ Affordable ($500 vs $100k/year)
-
-vs. TRM Labs:
-- ✅ Open-source & transparent algorithms
-- ✅ Self-hostable (no data leaves your server)
-- ✅ Customizable risk scoring
-
-vs. CipherTrace:
-- ✅ Proactive blocking (not just reporting)
-- ✅ Developer-friendly API
-- ✅ Modern tech stack
-
-## 📈 Impact
-
-**For Protocols**
-- Reduce regulatory risk by 90%
-- Avoid multi-million dollar fines
-- Build trust with users and regulators
-
-**For Regulators**
-- Transparent, auditable compliance data
-- Real-time monitoring vs. quarterly reports
-- Easier to identify bad actors
-
-**For Solana Ecosystem**
-- Attract institutional capital
-- Improve reputation
-- Enable mainstream adoption
+| Feature | Us | Chainalysis | TRM Labs |
+|---|---|---|---|
+| Solana-native | ✅ | ❌ | ❌ |
+| On-chain enforcement | ✅ | ❌ | ❌ |
+| Real-time blocking | ✅ | ❌ | ❌ |
+| Affordable pricing | ✅ | ❌ | ❌ |
+| Open source | ✅ | ❌ | ❌ |
 
 ## 🚧 Roadmap
 
-**Phase 1 (Completed)** ✅
-- [x] Transaction indexer
-- [x] Risk scoring algorithm
-- [x] Pattern detection
+**Phase 1 (Completed ✅)**
+- [x] Transaction indexer (Helius mainnet)
+- [x] Risk scoring algorithm (0-100)
+- [x] Pattern detection (structuring, rapid movement, etc)
 - [x] Smart contract with Transfer Hook
-- [x] Dashboard MVP
+- [x] Batman dark theme dashboard
+- [x] D3.js network graph
+- [x] JWT authentication
+- [x] Production deployment (Vercel + Railway)
 
 **Phase 2 (Next 30 days)**
 - [ ] Machine learning model for anomaly detection
-- [ ] Network graph visualization
-- [ ] Mobile app (Solana Mobile)
-- [ ] Telegram bot alerts
-- [ ] Integration with more wallets
+- [ ] Telegram/email alert notifications
+- [ ] PDF compliance report export
+- [ ] Phantom wallet connect
+- [ ] Mobile responsive improvements
 
 **Phase 3 (90 days)**
 - [ ] Multi-chain support (Ethereum, Polygon)
@@ -344,40 +268,22 @@ vs. CipherTrace:
 - [ ] White-label solution
 - [ ] API marketplace
 
-## 🤝 Team
+## 👤 Team
 
-- **[Your Name]** - Full Stack + Blockchain
-- **[Team Member 2]** - Backend + Data Science
-- **[Team Member 3]** - Frontend + Design
-- **[Team Member 4]** - Smart Contracts + Solana
+- **Ayush Koirala** — Full Stack + Blockchain (Nepal 🇳🇵)
 
 ## 📜 License
 
-MIT License - see [LICENSE](LICENSE)
+MIT License
 
 ## 🙏 Acknowledgments
 
-- Solana Foundation for the bounty
+- Solana Foundation for the bounty opportunity
 - Anchor Framework team
 - Helius for RPC infrastructure
-- Open source community
-
-## 📧 Contact
-
-- Website: [Coming Soon]
-- Twitter: [@YourHandle](https://twitter.com/yourhandle)
-- Email: team@solana-aml.com
-- Discord: [Join our server](https://discord.gg/yourserver)
-
-## 🔗 Links
-
-- [Live Demo](https://solana-aml-demo.vercel.app)
-- [Demo Video](YOUR_YOUTUBE_LINK)
-- [GitHub](https://github.com/your-team/solana-aml-suite)
-- [Documentation](https://docs.solana-aml.com)
 
 ---
 
-**Built with ❤️ for Solana Bounty 2024**
+**Built with 🦇 for Solana Bounty 2025 — Nepal 🇳🇵**
 
-*Making blockchain safer, one transaction at a time.*
+*Making Solana safer, one transaction at a time.*
