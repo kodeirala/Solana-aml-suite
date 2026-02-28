@@ -16,7 +16,7 @@
 | 🌐 **Live Demo** | [solana-aml-suite-j275rj0be-kodeiralas-projects.vercel.app](https://solana-aml-suite-j275rj0be-kodeiralas-projects.vercel.app) |
 | 🔧 **Backend API** | [solana-aml-suite-production.up.railway.app](https://solana-aml-suite-production.up.railway.app/api/health) |
 | 📦 **GitHub** | [github.com/kodeirala/Solana-aml-suite](https://github.com/kodeirala/Solana-aml-suite) |
-| 📹 **Demo Video** | Coming Soon |
+| 📹 **Demo Video** | https://youtu.be/LkVrUxWMY70 |
 
 **Test credentials:** Email: `demo@aml.com` / Password: `Demo1234!`
 
