@@ -271,6 +271,9 @@ Visit `http://localhost:3000` 🦇
 ## 👤 Team
 
 - **Ayush Koirala** — Full Stack + Blockchain (Nepal 🇳🇵)
+## 🐦 Built in Public
+
+Follow the journey: https://x.com/koro_beliefs/status/202776256759117035
 
 ## 📜 License
 
